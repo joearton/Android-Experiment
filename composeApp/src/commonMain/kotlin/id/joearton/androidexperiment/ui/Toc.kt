@@ -3,6 +3,7 @@ package id.joearton.androidexperiment.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
@@ -22,7 +23,7 @@ fun TocList(topics: List<Topic>, selectedId: String, onSelect: (String) -> Unit)
                 modifier = Modifier.padding(16.dp),
             )
         }
-        topics.groupBy { it.category }.forEach { (category, items) ->
+        topics.groupBy { it.category }.forEach { (category, categoryTopics) ->
             item(key = category.name) {
                 Text(
                     category.label,
@@ -31,7 +32,7 @@ fun TocList(topics: List<Topic>, selectedId: String, onSelect: (String) -> Unit)
                     modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 4.dp),
                 )
             }
-            items(items, key = { it.id }) { topic ->
+            items(categoryTopics, key = { it.id }) { topic ->
                 NavigationDrawerItem(
                     label = { Text(topic.title) },
                     selected = topic.id == selectedId,
